@@ -8,23 +8,40 @@ and capturing wild creatures uses **Capture Cubes** instead of Poke Balls.
 The mechanics (turn-based battles, elemental type matchups, catching wild
 creatures) are inspired by the genre in general.
 
-## Current milestone: battle system
+## Current milestone: battle system + gyms/leveling hub
 
-This first milestone implements the turn-based battle engine end to end:
+The turn-based battle engine (8 original creature species across 8 elemental
+types, a type effectiveness chart with STAB, moves with power/accuracy/PP,
+speed-based turn order, and a Capture Cube mechanic) now sits behind a
+**Trainer Hub** menu instead of a fixed demo battle -- there's still no
+overworld, just buttons:
 
-- 8 original creature species across 8 elemental types (Ember, Aqua, Verdant,
-  Volt, Terra, Zephyr, Mind, Shadow) plus a neutral Basic type
-- A type effectiveness chart and STAB (same-type attack bonus)
-- Moves with power/accuracy/PP, plus a stat-boosting status move
-- Speed-based turn order, damage calculation, fainting, and win/lose states
-- A Capture Cube mechanic for catching wild creatures (catch chance scales
-  with the target's remaining HP and per-species catch rate); trainer-owned
-  creatures can't be captured
-- A canvas-rendered battle UI (HP bars, message box, menus) with mouse and
-  keyboard input
+- Your creature (starts as Pyrekit, Lv5) persists across battles, with a
+  real XP/leveling system: win a fight, gain XP, level up (stats recompute,
+  current HP carries over as a raw number, matching how leveling works in
+  the genre)
+- **Battle a Trainer**: an optional, repeatable grind encounter against a
+  randomly picked trainer, scaled to your creature's current level, purely
+  for earning XP
+- **4 Gym Challenges**, unlocked in order as you defeat each one: Ember Gym
+  (Rook), Volt Gym (Marin), Zephyr Gym (Dorian), Shadow Gym (Nyx). Each gym
+  leader fields a themed 2-3 creature team that gets tougher as you go, and
+  clearing one awards a badge
+- Gym typing was deliberately chosen to avoid a double-disadvantage matchup
+  against the starter -- some types both resist Ember *and* hit it back
+  super effectively, which (combined with only ever having one active
+  creature, no team swapping) made a gym of that type nearly unwinnable at
+  any level
+- Between encounters your creature is automatically healed and its PP
+  refilled back at the Hub, so the challenge is the fight itself, not
+  attrition from a lack of healing items
 
-The overworld, towns, story, and multi-creature teams are out of scope for
-this milestone and would come next.
+Recommended levels shown on each gym button come from actual simulated
+win-rate testing, not guesses -- see `js/engine/encounter.js` for the
+XP/battle-sequencing logic.
+
+An overworld, towns, story, and multi-creature teams (with switching) are
+still out of scope and would come next.
 
 ## Running it
 
@@ -45,8 +62,10 @@ css/style.css
 js/data/types.js        - element types and the effectiveness chart
 js/data/moves.js        - move definitions
 js/data/creatures.js     - species definitions
-js/engine/creature.js    - creature instance (stats, HP, PP, stat stages)
-js/engine/battle.js      - turn-resolving battle state machine
-js/ui/renderer.js        - canvas drawing (pure function of battle + UI state)
-js/main.js               - input handling and game loop
+js/data/trainers.js      - grind trainers and the 4 gym leaders' teams
+js/engine/creature.js    - creature instance (stats, HP, PP, stat stages, XP/leveling)
+js/engine/battle.js      - turn-resolving battle state machine (single opponent)
+js/engine/encounter.js   - wraps Battle to handle multi-creature trainer/gym fights + XP
+js/ui/renderer.js        - canvas drawing (hub screen + battle screens)
+js/main.js               - input handling, hub/encounter state machine, game loop
 ```

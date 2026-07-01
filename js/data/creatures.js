@@ -58,4 +58,55 @@ Game.Species = {
     moves: ['ram', 'umbralbite'],
     catchRate: 0.6,
   },
+
+  // Gym-leader species -- shares its leader's type, distinct from any starter.
+  cindermite: {
+    name: 'Cindermite',
+    types: ['Ember'],
+    base: { hp: 36, atk: 46, def: 36, spd: 60 },
+    moves: ['ram', 'cinderjab', 'guard'],
+    catchRate: 0.5,
+  },
+  emberhorn: {
+    name: 'Emberhorn',
+    types: ['Ember'],
+    base: { hp: 48, atk: 60, def: 50, spd: 55 },
+    moves: ['ram', 'cinderjab', 'flareburst', 'guard'],
+    catchRate: 0.3,
+  },
+  tidalfin: {
+    name: 'Tidalfin',
+    types: ['Aqua'],
+    base: { hp: 50, atk: 58, def: 52, spd: 52 },
+    moves: ['ram', 'aquaslap', 'tidalrush', 'guard'],
+    catchRate: 0.3,
+  },
+  stonemaw: {
+    name: 'Stonemaw',
+    types: ['Terra'],
+    base: { hp: 55, atk: 50, def: 70, spd: 25 },
+    moves: ['ram', 'bulwarkcharge', 'guard'],
+    catchRate: 0.25,
+  },
+  voltmane: {
+    name: 'Voltmane',
+    types: ['Volt'],
+    base: { hp: 48, atk: 58, def: 46, spd: 70 },
+    moves: ['ram', 'voltnip', 'staticshock', 'guard'],
+    catchRate: 0.3,
+  },
+  galevane: {
+    name: 'Galevane',
+    types: ['Zephyr'],
+    base: { hp: 46, atk: 56, def: 44, spd: 72 },
+    moves: ['ram', 'galeslice', 'guard'],
+    catchRate: 0.3,
+  },
+  duskveil: {
+    name: 'Duskveil',
+    types: ['Shadow'],
+    base: { hp: 46, atk: 62, def: 46, spd: 62 },
+    moves: ['ram', 'umbralbite', 'guard'],
+    catchRate: 0.25,
+  },
 };

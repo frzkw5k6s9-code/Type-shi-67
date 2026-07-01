@@ -4,9 +4,12 @@ window.Game = window.Game || {};
   const canvas = document.getElementById('battle-canvas');
   const ctx = canvas.getContext('2d');
 
-  let battle = null;
+  const badges = new Set();
+  const player = new Game.Creature('pyrekit', 5, { isWild: false });
+
+  let encounter = null;
   const state = {
-    phase: 'message', // 'message' | 'menu' | 'moves' | 'ended'
+    phase: 'hub', // 'hub' | 'message' | 'menu' | 'moves' | 'encounterEnd'
     pending: [],
     currentMessage: '',
     buttons: [],
@@ -29,36 +32,95 @@ window.Game = window.Game || {};
       // 'damage' and 'faint' events have already mutated the creature model;
       // nothing to display beyond the next render.
     }
-    state.phase = battle.over ? 'ended' : 'menu';
+    state.phase = encounter && encounter.finished ? 'encounterEnd' : 'menu';
     render();
   }
 
   function render() {
-    state.buttons = Game.UI.draw(ctx, battle, state);
+    if (state.phase === 'hub') {
+      state.buttons = Game.UI.drawHub(ctx, { player, badges, gyms: Game.GymLeaders });
+    } else {
+      state.buttons = Game.UI.drawBattle(ctx, encounter.battle, state);
+    }
   }
 
-  function startBattle(scenario) {
-    let player, enemy, isWildBattle, introText;
+  function goToHub() {
+    encounter = null;
+    state.pending = [];
+    state.phase = 'hub';
+    render();
+  }
 
-    if (scenario === 'trainer') {
-      player = new Game.Creature('pyrekit', 9, { isWild: false });
-      enemy = new Game.Creature('terrapin', 9, { isWild: false });
-      isWildBattle = false;
-      introText = `Rival sent out ${enemy.name}!`;
-    } else {
-      player = new Game.Creature('pyrekit', 8, { isWild: false });
-      enemy = new Game.Creature('voltling', 6, { isWild: true });
-      isWildBattle = true;
-      introText = `A wild ${enemy.name} appeared!`;
+  function buildRecapMessages(enc) {
+    const msgs = [];
+
+    if (enc.outcome === 'lose') {
+      msgs.push({ type: 'message', text: `${enc.player.name} was defeated...` });
+    } else if (enc.outcome === 'fled') {
+      msgs.push({ type: 'message', text: 'You got away safely.' });
+    } else if (enc.outcome === 'captured') {
+      msgs.push({ type: 'message', text: `${enc.enemy.name} was tamed and studied! (capture demo)` });
+    } else if (enc.outcome === 'win') {
+      if (enc.badge && !badges.has(enc.badge.id)) {
+        badges.add(enc.badge.id);
+        msgs.push({ type: 'message', text: `You defeated ${enc.label}! You earned the ${enc.badge.name}!` });
+      } else if (enc.mode === 'trainer') {
+        msgs.push({ type: 'message', text: `You defeated ${enc.label}!` });
+      }
     }
 
-    battle = new Game.Battle(player, enemy, { isWildBattle });
+    if (enc.xpGained > 0) {
+      const levelsReached = enc.player.gainXP(enc.xpGained);
+      msgs.push({ type: 'message', text: `${enc.player.name} gained ${enc.xpGained} XP!` });
+      levelsReached.forEach((lvl) => {
+        msgs.push({ type: 'message', text: `${enc.player.name} grew to level ${lvl}!` });
+      });
+    }
+
+    enc.player.healFully();
+    msgs.push({ type: 'message', text: 'Back at the Hub, your creature is fully rested.' });
+    return msgs;
+  }
+
+  function runEncounterAction(fn) {
+    let events = fn();
+    if (encounter.finished) {
+      events = events.concat(buildRecapMessages(encounter));
+    }
+    enqueue(events);
+  }
+
+  function startEncounter(config) {
+    encounter = new Game.Encounter(player, config);
     state.pending = [];
-    enqueue([{ type: 'message', text: introText }]);
+    enqueue([{ type: 'message', text: encounter.introText }]);
+  }
+
+  function startWildEncounter() {
+    const wildPool = ['voltling', 'zephyrit', 'mindra', 'shadelet'];
+    const species = wildPool[Math.floor(Math.random() * wildPool.length)];
+    const level = Math.max(3, player.level - 2 + Math.floor(Math.random() * 3));
+    startEncounter({ mode: 'wild', team: [{ species, level }] });
+  }
+
+  function startGrindTrainer() {
+    const t = Game.GrindTrainers[Math.floor(Math.random() * Game.GrindTrainers.length)];
+    const level = Math.max(3, player.level - 1 + Math.floor(Math.random() * 4)); // playerLevel-1 .. playerLevel+2
+    startEncounter({ mode: 'trainer', label: t.name, team: [{ species: t.species, level }] });
+  }
+
+  function startGym(index) {
+    const gym = Game.GymLeaders[index];
+    startEncounter({ mode: 'trainer', label: gym.leader, team: gym.team, badge: gym.badge });
   }
 
   function handleAction(action) {
     if (!action || action === 'disabled') return;
+
+    if (action === 'hub:train') return startGrindTrainer();
+    if (action === 'hub:wild') return startWildEncounter();
+    if (action.startsWith('hub:gym:')) return startGym(parseInt(action.split(':')[2], 10));
+    if (action === 'gotoHub') return goToHub();
 
     if (action === 'continue') {
       advance();
@@ -75,24 +137,16 @@ window.Game = window.Game || {};
       return;
     }
     if (action === 'cube') {
-      enqueue(battle.throwCube());
+      runEncounterAction(() => encounter.throwCube());
       return;
     }
     if (action === 'run') {
-      enqueue(battle.attemptRun());
+      runEncounterAction(() => encounter.attemptRun());
       return;
     }
     if (action.startsWith('move:')) {
       const idx = parseInt(action.split(':')[1], 10);
-      enqueue(battle.chooseMove(idx));
-      return;
-    }
-    if (action === 'restart:wild') {
-      startBattle('wild');
-      return;
-    }
-    if (action === 'restart:trainer') {
-      startBattle('trainer');
+      runEncounterAction(() => encounter.chooseMove(idx));
       return;
     }
   }
@@ -122,14 +176,11 @@ window.Game = window.Game || {};
       handleAction('continue');
     } else if (evt.key >= '1' && evt.key <= '4' && state.phase === 'moves') {
       const idx = parseInt(evt.key, 10) - 1;
-      if (battle.player.moves[idx]) handleAction(`move:${idx}`);
+      if (encounter.player.moves[idx]) handleAction(`move:${idx}`);
     } else if (evt.key === 'Escape' && state.phase === 'moves') {
       handleAction('back');
     }
   });
 
-  document.getElementById('btn-wild').addEventListener('click', () => startBattle('wild'));
-  document.getElementById('btn-trainer').addEventListener('click', () => startBattle('trainer'));
-
-  startBattle('wild');
+  render();
 })();

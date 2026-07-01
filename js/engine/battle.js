@@ -40,6 +40,13 @@ window.Game = window.Game || {};
     _pickEnemyMove() {
       const usable = this.enemy.moves.filter((m) => m.currentPP > 0);
       const pool = usable.length ? usable : this.enemy.moves;
+      // Mostly attack, occasionally use a status move -- a fully random AI
+      // ends up spamming stat-boosting moves (they're ~1 in 4 moves on some
+      // creatures) often enough to stall fights out indefinitely.
+      const attackMoves = pool.filter((m) => m.power > 0);
+      if (attackMoves.length && Math.random() < 0.8) {
+        return attackMoves[Math.floor(Math.random() * attackMoves.length)];
+      }
       return pool[Math.floor(Math.random() * pool.length)];
     }
 

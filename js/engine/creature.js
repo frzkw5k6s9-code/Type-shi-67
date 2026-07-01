@@ -28,6 +28,7 @@ window.Game = window.Game || {};
       this.stages = { atk: 0, def: 0, spd: 0 };
       this.isWild = !!opts.isWild;
       this.fainted = false;
+      this.xp = 0;
     }
 
     get name() {
@@ -59,6 +60,37 @@ window.Game = window.Game || {};
 
     resetStages() {
       this.stages = { atk: 0, def: 0, spd: 0 };
+    }
+
+    xpToNextLevel() {
+      return 20 + this.level * 22;
+    }
+
+    xpFraction() {
+      return this.xp / this.xpToNextLevel();
+    }
+
+    // Adds XP and applies any level-ups (a big XP reward can trigger more
+    // than one). Current HP carries over as a raw number, not a fraction --
+    // leveling up alone never heals you. Returns the list of new levels reached.
+    gainXP(amount) {
+      this.xp += amount;
+      const levelsReached = [];
+      while (this.xp >= this.xpToNextLevel()) {
+        this.xp -= this.xpToNextLevel();
+        this.level += 1;
+        this.stats = computeStats(this.species.base, this.level);
+        this.currentHP = Math.min(this.currentHP, this.stats.maxHP);
+        levelsReached.push(this.level);
+      }
+      return levelsReached;
+    }
+
+    healFully() {
+      this.currentHP = this.stats.maxHP;
+      this.fainted = false;
+      this.moves.forEach((m) => (m.currentPP = m.pp));
+      this.resetStages();
     }
   }
 
