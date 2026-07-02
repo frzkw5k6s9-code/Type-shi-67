@@ -1,15 +1,26 @@
 * {
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  height: 100%;
+  overscroll-behavior: none;
 }
 
 body {
   margin: 0;
   padding: 24px;
+  min-height: 100vh;
+  min-height: 100dvh;
   background: #222;
   color: #eee;
   font-family: monospace;
   display: flex;
   justify-content: center;
+  align-items: center;
+  overscroll-behavior: none;
+  user-select: none;
 }
 
 .page {
@@ -17,6 +28,7 @@ body {
   flex-direction: column;
   align-items: center;
   max-width: 520px;
+  width: 100%;
 }
 
 h1 {
@@ -38,27 +50,7 @@ canvas {
   max-width: 480px;
   height: auto;
   cursor: pointer;
-}
-
-.controls {
-  margin-top: 14px;
-  display: flex;
-  gap: 10px;
-}
-
-.controls button {
-  font-family: monospace;
-  font-size: 13px;
-  padding: 8px 14px;
-  border-radius: 6px;
-  border: 2px solid #666;
-  background: #333;
-  color: #eee;
-  cursor: pointer;
-}
-
-.controls button:hover {
-  background: #444;
+  touch-action: manipulation;
 }
 
 .hint {
@@ -66,4 +58,22 @@ canvas {
   font-size: 12px;
   color: #888;
   text-align: center;
+}
+
+@media (max-width: 420px) {
+  body {
+    padding: 14px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .subtitle {
+    font-size: 12px;
+  }
+
+  .hint {
+    font-size: 11px;
+  }
 }
