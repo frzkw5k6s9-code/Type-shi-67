@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cube Tamers - Battle Arena</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="page">
+    <h1>Cube Tamers</h1>
+    <p class="subtitle">An original monster-battling arena &mdash; turn-based fights with elemental types and Capture Cubes.</p>
+
+    <canvas id="battle-canvas" width="480" height="320"></canvas>
+
+    <p class="hint">Click the on-screen menu, or use keys 1-4 to pick a move, Enter to advance text, Esc to back out of the move menu.</p>
+  </div>
+
+  <script src="js/data/types.js"></script>
+  <script src="js/data/moves.js"></script>
+  <script src="js/data/creatures.js"></script>
+  <script src="js/data/trainers.js"></script>
+  <script src="js/engine/creature.js"></script>
+  <script src="js/engine/battle.js"></script>
+  <script src="js/engine/encounter.js"></script>
+  <script src="js/ui/renderer.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
