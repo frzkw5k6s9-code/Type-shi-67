@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title data-i18n="meta.title">Barbero — Brazilian Barbershop in Jeddah</title>
+  <meta name="description" content="Barbero is a Brazilian barbershop in Jeddah. Precision fades, sculpted beards and hot-towel shaves. Ten chairs, one-hour slots, instant online booking." />
+  <meta name="theme-color" content="#060807" />
+  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="preload" href="/fonts/bebas-neue-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/landing.css" />
+  <script type="module" src="/js/landing.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main" data-i18n="a11y.skip">Skip to content</a>
+
+  <header class="nav" id="nav">
+    <div class="container nav__in">
+      <a class="brand" href="/" aria-label="Barbero">
+        <img class="brand__logo" src="/assets/logo-96.jpg" width="40" height="40" alt="" />
+        <span class="brand__word"><b>BARBERO</b><small data-i18n="brand.city">Jeddah</small></span>
+      </a>
+      <nav class="nav__links" id="menu" aria-label="Main">
+        <a href="#craft" data-i18n="nav.craft">The craft</a>
+        <a href="#services" data-i18n="nav.services">Services</a>
+        <a href="#book" data-i18n="nav.book_online">Booking</a>
+        <a href="#gallery" id="navGallery" hidden data-i18n="nav.gallery">Gallery</a>
+        <a href="#visit" data-i18n="nav.visit">Visit</a>
+      </nav>
+      <div class="nav__actions">
+        <span id="langSlot"></span>
+        <a class="btn btn--ghost btn--sm nav__login" id="navLogin" href="/login" data-i18n="nav.signin">Sign in</a>
+        <a class="btn btn--primary btn--sm nav__cta" href="/account" data-i18n="nav.cta">Book a chair</a>
+        <span id="burgerSlot"></span>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ════════════ HERO ════════════ -->
+    <section class="hero" id="top">
+      <div class="hero__bg" aria-hidden="true">
+        <div class="hero__photo" id="heroPhoto"></div>
+        <span class="hero__mark">BARBERO</span>
+      </div>
+      <div class="container hero__grid">
+        <div class="hero__copy">
+          <p class="eyebrow"><span class="live" aria-hidden="true"></span><span data-i18n="hero.kicker">Brazilian barbershop · Jeddah</span></p>
+          <h1 class="display hero__title">
+            <span class="hero__l1" data-i18n="hero.l1">Fresh cuts.</span>
+            <span class="hero__l2" data-i18n="hero.l2">Brazilian soul.</span>
+          </h1>
+          <p class="lead" data-i18n="hero.sub">Precision fades, sculpted beards and hot-towel shaves in the heart of Jeddah. Ten chairs, one-hour slots — pick yours in seconds.</p>
+          <div class="hero__cta">
+            <a class="btn btn--primary btn--lg" href="/account"><span data-i18n="hero.cta">Book your chair</span><span id="ctaArrow"></span></a>
+            <a class="btn btn--ghost btn--lg" href="#services" data-i18n="hero.cta2">See services</a>
+          </div>
+          <ul class="stats">
+            <li><b>10</b><span data-i18n="hero.stat1">Chairs</span></li>
+            <li><b>1<small>h</small></b><span data-i18n="hero.stat2">Per slot</span></li>
+            <li><b>AR<small>·</small>EN</b><span data-i18n="hero.stat3">Bilingual</span></li>
+          </ul>
+        </div>
+
+        <aside class="board" aria-label="Live chair availability">
+          <img class="board__logo" src="/assets/logo-dark.jpg" width="132" height="132" alt="Barbero logo: the letter B with a mustache" />
+          <div class="board__head">
+            <span class="eyebrow-sm" data-i18n="board.next">Next open hour</span>
+            <strong class="board__time display" id="boardTime">—</strong>
+            <span class="board__day" id="boardDay"></span>
+          </div>
+          <div id="boardChairs"></div>
+          <div class="board__foot">
+            <span id="boardCount" class="muted"></span>
+            <a class="btn btn--green btn--sm" href="/account" data-i18n="board.reserve">Reserve</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ════════════ MARQUEE ════════════ -->
+    <div class="marquee-wrap" aria-hidden="true"><div class="marquee"><div class="marquee__track" id="marquee"></div></div></div>
+
+    <!-- ════════════ CRAFT ════════════ -->
+    <section class="section" id="craft">
+      <div class="container split">
+        <div class="reveal">
+          <p class="eyebrow"><span data-i18n="craft.eyebrow">The craft</span></p>
+          <h2 class="display h2"><span data-i18n="craft.h1">Sharp lines.</span><br /><span class="accent" data-i18n="craft.h2">Easy confidence.</span></h2>
+        </div>
+        <div class="reveal">
+          <p class="lead" data-i18n="craft.lead">Barbero brings Brazilian-style barbering to Jeddah: clean fades, sculpted beards and a hot-towel finish, done in a chair built for comfort.</p>
+          <ul class="feats" id="feats"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════ SERVICES ════════════ -->
+    <section class="section section--alt" id="services">
+      <div class="container">
+        <div class="section__head reveal">
+          <p class="eyebrow"><span data-i18n="svc.eyebrow">Services</span></p>
+          <h2 class="display h2"><span data-i18n="svc.h">Pick your ritual</span></h2>
+          <p class="lead" data-i18n="svc.sub">Every service is booked as one full hour in your own chair.</p>
+        </div>
+        <div class="svc-grid" id="svcGrid"><div class="spinner"></div></div>
+      </div>
+    </section>
+
+    <!-- ════════════ BOOKING ════════════ -->
+    <section class="section" id="book">
+      <div class="container">
+        <div class="section__head reveal">
+          <p class="eyebrow"><span data-i18n="how.eyebrow">Online booking</span></p>
+          <h2 class="display h2"><span data-i18n="how.h">Book in three taps</span></h2>
+        </div>
+        <ol class="steps" id="steps"></ol>
+        <div class="avail reveal">
+          <div class="avail__head">
+            <h3 data-i18n="avail.h">Next 7 days</h3>
+            <span class="muted" data-i18n="avail.sub">Live from the shop's schedule</span>
+          </div>
+          <div class="days" id="days"><div class="spinner"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════ GALLERY (appears when photos are added) ════════════ -->
+    <section class="section section--alt" id="gallery" hidden>
+      <div class="container">
+        <div class="section__head reveal">
+          <p class="eyebrow"><span data-i18n="gal.eyebrow">Inside Barbero</span></p>
+          <h2 class="display h2"><span data-i18n="gal.h">The shop</span></h2>
+        </div>
+        <div class="gallery" id="galleryGrid"></div>
+      </div>
+    </section>
+
+    <!-- ════════════ CTA BAND ════════════ -->
+    <section class="band">
+      <div class="container band__in reveal">
+        <h2 class="display band__h"><span data-i18n="band.h">Your chair is waiting.</span></h2>
+        <a class="btn btn--primary btn--lg" href="/account"><span data-i18n="hero.cta">Book your chair</span></a>
+      </div>
+    </section>
+
+    <!-- ════════════ VISIT ════════════ -->
+    <section class="section" id="visit">
+      <div class="container visit">
+        <div class="reveal">
+          <p class="eyebrow"><span data-i18n="visit.eyebrow">Visit</span></p>
+          <h2 class="display h2"><span data-i18n="visit.h">Find us in Jeddah</span></h2>
+          <ul class="contact" id="contact"></ul>
+        </div>
+        <div class="hours card reveal">
+          <h3 data-i18n="visit.hours">Opening hours</h3>
+          <ul id="hours" class="hours__list"></ul>
+          <p class="muted hours__note" data-i18n="visit.note">Hours follow the shop's weekly schedule and may change on holidays.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__in">
+      <a class="brand" href="/" aria-label="Barbero">
+        <img class="brand__logo" src="/assets/logo-96.jpg" width="40" height="40" alt="" />
+        <span class="brand__word"><b>BARBERO</b><small data-i18n="brand.city">Jeddah</small></span>
+      </a>
+      <p class="muted" data-i18n="footer.note">Brazilian barbershop · Jeddah, Saudi Arabia</p>
+      <nav class="footer__links" aria-label="Footer">
+        <a href="/login" data-i18n="nav.signin">Sign in</a>
+        <a href="/login?portal=admin" data-i18n="nav.staff">Staff portal</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

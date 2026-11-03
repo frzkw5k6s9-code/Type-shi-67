@@ -1,0 +1,11 @@
+Put Barbero's real shop photos in this folder (JPG, PNG, WebP or AVIF).
+
+  hero.jpg (or hero.png/.webp)  ->  becomes the faded background of the home-page hero.
+  every other image             ->  appears in the "The shop" gallery (sorted by file name).
+
+Nothing else to configure: the gallery section and its menu link stay hidden until at least
+one photo is here, and the page picks new files up within ~15 seconds.
+
+Tips: keep each file under ~1.5 MB, ~2000px on the long edge, and only add photos Barbero
+has given permission to publish. Use descriptive file names in the order you want, e.g.
+01-shopfront.jpg, 02-chairs.jpg, 03-fade.jpg

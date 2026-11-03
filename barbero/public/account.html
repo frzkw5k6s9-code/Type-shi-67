@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title data-i18n="acct.title">My account — Barbero</title>
+  <meta name="robots" content="noindex" />
+  <meta name="theme-color" content="#060807" />
+  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="preload" href="/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/portal.css" />
+  <script type="module" src="/js/account.js"></script>
+</head>
+<body class="has-tabs">
+  <header class="topbar">
+    <div class="container topbar__in">
+      <a class="brand" href="/" aria-label="Barbero">
+        <img class="brand__logo" src="/assets/logo-96.jpg" width="40" height="40" alt="" />
+        <span class="brand__word"><b>BARBERO</b><small data-i18n="brand.city">Jeddah</small></span>
+      </a>
+      <nav class="tabs" id="tabs" aria-label="Account"></nav>
+      <div class="topbar__end" id="topEnd"></div>
+    </div>
+  </header>
+  <main class="container page" id="view" tabindex="-1"><div class="spinner"></div></main>
+</body>
+</html>

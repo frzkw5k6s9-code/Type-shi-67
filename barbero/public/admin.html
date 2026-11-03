@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title data-i18n="adm.title">Admin — Barbero</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#060807" />
+  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="preload" href="/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/portal.css" />
+  <script type="module" src="/js/admin.js"></script>
+</head>
+<body>
+  <div class="admin">
+    <aside class="side">
+      <div class="mobile-bar">
+        <a class="brand" href="/" aria-label="Barbero">
+          <img class="brand__logo" src="/assets/logo-96.jpg" width="40" height="40" alt="" />
+          <span class="brand__word"><b>BARBERO</b><small data-i18n="adm.staff">Staff</small></span>
+        </a>
+        <span class="row only-m" id="mobileActions"></span>
+      </div>
+      <nav class="side__nav" id="nav" aria-label="Admin"></nav>
+      <div class="side__foot" id="sideFoot"></div>
+    </aside>
+    <main class="main" id="view" tabindex="-1"><div class="spinner"></div></main>
+  </div>
+</body>
+</html>

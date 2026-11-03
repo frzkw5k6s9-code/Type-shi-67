@@ -1,0 +1,16 @@
+{
+  "name": "barbero-jeddah",
+  "version": "1.0.0",
+  "description": "Barbero (Jeddah) - website, customer/admin login portal and 10-chair hourly booking system. Zero runtime dependencies.",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "start": "node --disable-warning=ExperimentalWarning server/index.js",
+    "dev": "NODE_ENV=development node --disable-warning=ExperimentalWarning --watch server/index.js",
+    "test": "NODE_ENV=test node --disable-warning=ExperimentalWarning --test --test-concurrency=1 \"test/*.test.js\"",
+    "create-admin": "node --disable-warning=ExperimentalWarning scripts/create-admin.js"
+  }
+}

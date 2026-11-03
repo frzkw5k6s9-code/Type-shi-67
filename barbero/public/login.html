@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title data-i18n="login.title">Sign in — Barbero</title>
+  <meta name="robots" content="noindex" />
+  <meta name="theme-color" content="#060807" />
+  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+  <link rel="preload" href="/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/css/base.css" />
+  <link rel="stylesheet" href="/css/portal.css" />
+  <script type="module" src="/js/login.js"></script>
+</head>
+<body class="auth-page">
+  <div class="auth">
+    <aside class="auth__brand">
+      <a class="brand" href="/" aria-label="Barbero">
+        <img class="brand__logo" src="/assets/logo-96.jpg" width="40" height="40" alt="" />
+        <span class="brand__word"><b>BARBERO</b><small data-i18n="brand.city">Jeddah</small></span>
+      </a>
+      <div class="auth__hero">
+        <img class="auth__logo" src="/assets/logo-dark.jpg" width="132" height="132" alt="Barbero logo" />
+        <h1 class="display auth__title"><span data-i18n="login.hero.l1">Your chair.</span> <span class="accent" data-i18n="login.hero.l2">Your time.</span></h1>
+        <p class="lead" data-i18n="login.hero.sub">Sign in to book a chair, manage your appointments and get notified when new times open.</p>
+        <ul class="trust" id="trust"></ul>
+      </div>
+      <small class="muted" data-i18n="footer.copy">© Barbero · Jeddah</small>
+    </aside>
+
+    <main class="auth__panel" id="main">
+      <div class="auth__top">
+        <a class="back" href="/" id="backLink"></a>
+        <span id="langSlot"></span>
+      </div>
+      <div class="auth__card">
+        <div class="seg" role="tablist" id="seg" data-i18n-aria-label="portal.label" aria-label="Choose portal"></div>
+        <div id="formHost" role="tabpanel"></div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

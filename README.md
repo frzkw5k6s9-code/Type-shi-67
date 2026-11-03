@@ -69,3 +69,9 @@ js/engine/encounter.js   - wraps Battle to handle multi-creature trainer/gym fig
 js/ui/renderer.js        - canvas drawing (hub screen + battle screens)
 js/main.js               - input handling, hub/encounter state machine, game loop
 ```
+
+---
+
+## Also in this repo: Barbero (Jeddah barbershop website)
+
+A bilingual website with customer/admin login portals and a 10-chair hourly booking system lives in [`barbero/`](barbero/README.md). It is independent of the game above (`cd barbero && npm start`).
