@@ -43,7 +43,10 @@
 .btn.is-busy::after { content: ''; position: absolute; width: 20px; height: 20px; border-radius: 50%; border: 3px solid rgb(0 0 0 / 0.25); border-top-color: #000; animation: spin 0.7s linear infinite; }
 
 /* ═════════════════════════ portal shell (customer) ═════════════════════════ */
-.topbar { position: sticky; top: 0; z-index: 90; background: rgb(6 8 7 / 0.85); backdrop-filter: blur(16px) saturate(1.4); border-bottom: 1px solid var(--line); }
+/* The glass effect lives on a pseudo-element: a backdrop-filter on .topbar itself would make it the containing
+   block of the position:fixed mobile tab bar and pin that bar to the top instead of the screen bottom. */
+.topbar { position: sticky; top: 0; z-index: 90; border-bottom: 1px solid var(--line); }
+.topbar::before { content: ''; position: absolute; inset: 0; z-index: -1; background: rgb(6 8 7 / 0.85); backdrop-filter: blur(16px) saturate(1.4); }
 .topbar__in { display: flex; align-items: center; gap: 18px; min-height: 68px; }
 .topbar__end { margin-inline-start: auto; display: flex; align-items: center; gap: 10px; }
 .tabs { display: flex; gap: 4px; margin-inline-start: 10px; }
@@ -56,7 +59,7 @@
 [dir='rtl'] .userchip { padding: 4px 4px 4px 14px; }
 .avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, var(--g), var(--y)); color: #000; display: grid; place-items: center; font-weight: 800; font-size: 0.8rem; flex: none; }
 @media (max-width: 860px) {
-  .userchip span { display: none; } .userchip { padding: 4px; }
+  .userchip > span:not(.avatar) { display: none; } .userchip { padding: 4px; }
   .tabs { position: fixed; inset: auto 0 0 0; z-index: 95; margin: 0; padding: 8px 10px calc(8px + env(safe-area-inset-bottom)); justify-content: space-around; background: rgb(10 14 12 / 0.96); backdrop-filter: blur(16px); border-top: 1px solid var(--line-2); }
   .tab { flex-direction: column; gap: 3px; padding: 8px 10px; font-size: 0.7rem; border-radius: 14px; flex: 1; justify-content: center; }
   .tab .dot { position: absolute; top: 2px; inset-inline-end: 22%; }
